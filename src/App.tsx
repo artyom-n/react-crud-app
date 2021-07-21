@@ -9,6 +9,7 @@ import {
 } from './utils/compareMembersValues';
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button';
+import AddMember from './components/AddMember/AddMember';
 
 type Members = {
   id: number,
@@ -236,69 +237,23 @@ const App = () => {
           </tbody>
         </Table>
       )}
-      {add === true && (
-        <>
-          <h4>Add member</h4>
-          <Table striped bordered hover size="sm" variant="dark">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Position</th>
-                <th>Description</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    className={styles.listInput}
-                    type="text" value={firstName}
-                    onChange={(e) => { setFirstName(e.target.value) }}
-                  />
-                </td>
-                <td>
-                  <input
-                    className={styles.listInput}
-                    type="text" value={lastName}
-                    onChange={(e) => { setLastName(e.target.value) }}
-                  />
-                </td>
-                <td>
-                  <input
-                    className={styles.listInput}
-                    type="text" value={position}
-                    onChange={(e) => { setPosition(e.target.value) }}
-                  />
-                </td>
-                <td>
-                  <input
-                    className={styles.listInput}
-                    type="text" value={description}
-                    onChange={(e) => { setDescription(e.target.value) }}
-                  />
-                </td>
-                <td>
-                  <Button
-                    size="sm"
-                    className={styles.listBtn}
-                    onClick={() => addMember(
-                      firstName,
-                      lastName,
-                      position,
-                      description
-                    )}>
-                    Save
-                  </Button>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </>
-      )}
+      <AddMember
+        add={add}
+        firstName={firstName}
+        lastName={lastName}
+        position={position}
+        description={description}
+        addMember={() => addMember(
+          firstName,
+          lastName,
+          position,
+          description
+        )}
+        setFirstName={(e: any) => { setFirstName(e.target.value) }}
+        setLastName={(e: any) => { setLastName(e.target.value) }}
+        setPosition={(e: any) => { setPosition(e.target.value) }}
+        setDescription={(e: any) => { setDescription(e.target.value) }}
+      />
     </div>
   )
 }
