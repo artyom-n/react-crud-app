@@ -7,11 +7,10 @@ import {
   comparePositions,
   compareDescriptions
 } from './utils/compareMembersValues';
-import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button';
 import AddMember from './components/AddMember/AddMember';
+import MembersList from './components/MembersList/MembersList';
 
-type Members = {
+export type Members = {
   id: number,
   firstName: string,
   lastName: string,
@@ -148,95 +147,28 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      {(edit === true && add === false) && <h4>Edit member</h4>}
-      {add === false && (
-        <Table striped bordered hover size="sm" variant="dark">
-          <thead>
-            <tr>
-              <th># {edit === false && <Button size="sm" className={styles.listBtn} onClick={sortByDefault}>◢</Button>}</th>
-              <th>First Name {edit === false && <Button size="sm" className={styles.listBtn} onClick={() => { sortMembers(compareFirstNames) }}>◢</Button>}</th>
-              <th>Last Name {edit === false && <Button size="sm" className={styles.listBtn} onClick={() => { sortMembers(compareLastNames) }}>◢</Button>}</th>
-              <th>Position {edit === false && <Button size="sm" className={styles.listBtn} onClick={() => { sortMembers(comparePositions) }}>◢</Button>}</th>
-              <th>Description {edit === false && <Button size="sm" className={styles.listBtn} onClick={() => { sortMembers(compareDescriptions) }}>◢</Button>}</th>
-              <th>{edit === false && <Button size="sm" className={styles.listBtn} onClick={openAddEditor}>+ Add member</Button>}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayedMembers.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>{item.id}</td>
-                  <td>{edit === false ? item.firstName :
-                    <input
-                      className={styles.listInput}
-                      type="text"
-                      value={firstName}
-                      onChange={(e) => { setFirstName(e.target.value) }}
-                    />}
-                  </td>
-                  <td>{edit === false ? item.lastName :
-                    <input
-                      className={styles.listInput}
-                      type="text"
-                      value={lastName}
-                      onChange={(e) => { setLastName(e.target.value) }}
-                    />}
-                  </td>
-                  <td>{edit === false ? item.position :
-                    <input
-                      className={styles.listInput}
-                      type="text"
-                      value={position}
-                      onChange={(e) => { setPosition(e.target.value) }}
-                    />}
-                  </td>
-                  <td>{edit === false ? item.description :
-                    <input
-                      className={styles.listInput}
-                      type="text"
-                      value={description}
-                      onChange={(e) => { setDescription(e.target.value) }}
-                    />}
-                  </td>
-                  <td>
-                    {edit === false ?
-                      <>
-                        <Button
-                          size="sm"
-                          className={styles.listBtn}
-                          onClick={() => editMember(index)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          size="sm"
-                          className={styles.listBtn}
-                          onClick={() => deleteMember(item.id)}
-                        >
-                          Delete
-                        </Button>
-                      </>
-                      :
-                      <Button
-                        size="sm"
-                        className={styles.listBtn}
-                        onClick={() => updateMember(
-                          item.id,
-                          firstName,
-                          lastName,
-                          position,
-                          description
-                        )}>
-                        Save
-                      </Button>
-                    }
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </Table>
-      )}
+      <MembersList
+        edit={edit}
+        add={add}
+        sortByDefault={sortByDefault}
+        sortFirstNames={() => { sortMembers(compareFirstNames) }}
+        sortLastNames={() => { sortMembers(compareLastNames) }}
+        sortPositions={() => { sortMembers(comparePositions) }}
+        sortDescriptions={() => { sortMembers(compareDescriptions) }}
+        openAddEditor={openAddEditor}
+        displayedMembers={displayedMembers}
+        firstName={firstName}
+        lastName={lastName}
+        position={position}
+        description={description}
+        setFirstName={(e) => { setFirstName(e.target.value) }}
+        setLastName={(e) => { setLastName(e.target.value) }}
+        setPosition={(e) => { setPosition(e.target.value) }}
+        setDescription={(e) => { setDescription(e.target.value) }}
+        editMember={editMember}
+        deleteMember={deleteMember}
+        updateMember={updateMember}
+      />
       <AddMember
         add={add}
         firstName={firstName}
