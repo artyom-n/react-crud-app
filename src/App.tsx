@@ -9,6 +9,7 @@ import {
 } from './utils/compareMembersValues';
 import AddMember from './components/AddMember/AddMember';
 import MembersList from './components/MembersList/MembersList';
+import Button from 'react-bootstrap/esm/Button';
 
 export type Members = {
   id: number,
@@ -28,6 +29,15 @@ const App = () => {
   const [description, setDescription] = useState<string>()
   const [edit, setEdit] = useState<boolean>(false)
   const [add, setAdd] = useState<boolean>(false)
+  const [theme, setTheme] = useState<string>('dark')
+
+  const changeTheme = () => {
+    if (theme === 'dark') {
+      setTheme('light')
+    } else {
+      setTheme('dark')
+    }
+  }
 
   const getMembers = () => {
     axios
@@ -130,6 +140,12 @@ const App = () => {
     setEdit(true)
   }
 
+  const backToList = () => {
+    setAdd(false)
+    setEdit(false)
+    getMembers()
+  }
+
   const sortMembers = (compare: any) => {
     const sortedMembers = [...displayedMembers]
       .sort(compare)
@@ -147,6 +163,19 @@ const App = () => {
 
   return (
     <div className={styles.container}>
+      {(add === false && edit === false) ?
+        (<Button
+          onClick={changeTheme}
+          className={styles.toggleBtn}>
+          Toggle theme
+        </Button>) : (
+          <Button
+            className={styles.backBtn}
+            onClick={backToList}
+          >Back to list
+          </Button>
+        )
+      }
       <MembersList
         edit={edit}
         add={add}
@@ -168,8 +197,10 @@ const App = () => {
         editMember={editMember}
         deleteMember={deleteMember}
         updateMember={updateMember}
+        theme={theme}
       />
       <AddMember
+        theme={theme}
         add={add}
         firstName={firstName}
         lastName={lastName}

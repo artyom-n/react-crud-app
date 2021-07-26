@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button';
 
 type Props = {
+    theme: string,
     add: boolean,
     firstName?: string,
     lastName?: string,
@@ -17,7 +18,7 @@ type Props = {
 }
 
 const AddMember = ({
-    add, firstName, lastName, position, description,
+    theme, add, firstName, lastName, position, description,
     addMember, setFirstName, setLastName, setPosition,
     setDescription }: Props) => {
     return (
@@ -25,7 +26,7 @@ const AddMember = ({
             {add === true && (
                 <>
                     <h4>Add member</h4>
-                    <Table striped bordered hover size="sm" variant="dark">
+                    <Table striped bordered hover size="sm" variant={theme}>
                         <thead>
                             <tr>
                                 <th>#</th>

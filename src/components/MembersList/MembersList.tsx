@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { Members } from '../../App';
 
 type Props = {
+    theme: string,
     edit: boolean,
     add: boolean,
     sortByDefault: () => void,
@@ -31,7 +32,7 @@ type Props = {
         description?: string) => void,
 }
 
-const MembersList = ({ edit, add, sortByDefault, sortFirstNames,
+const MembersList = ({ theme, edit, add, sortByDefault, sortFirstNames,
     sortLastNames, sortPositions, sortDescriptions, openAddEditor,
     displayedMembers, firstName, lastName, position, description,
     setFirstName, setLastName, setPosition, setDescription,
@@ -40,7 +41,7 @@ const MembersList = ({ edit, add, sortByDefault, sortFirstNames,
         <>
             {(edit === true && add === false) && <h4>Edit member</h4>}
             {add === false && (
-                <Table striped bordered hover size="sm" variant="dark">
+                <Table striped bordered hover size="sm" variant={theme}>
                     <thead>
                         <tr>
                             <th># {edit === false && <Button size="sm" className={styles.listBtn} onClick={sortByDefault}>◢</Button>}</th>
