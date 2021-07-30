@@ -1,4 +1,4 @@
-# ReactApp
+# React CRUD App
 
 ### How to run app
 
